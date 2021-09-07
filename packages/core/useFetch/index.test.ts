@@ -1,7 +1,7 @@
-import { useFetch, createFetch } from '.'
 import fetchMock from 'jest-fetch-mock'
 import { until } from '@vueuse/shared'
 import { nextTick, ref } from 'vue-demi'
+import { useFetch, createFetch } from '.'
 
 describe('useFetch', () => {
   beforeEach(() => {
@@ -19,6 +19,20 @@ describe('useFetch', () => {
 
     expect(statusCode.value).toBe(200)
     expect(data.value).toBe('Hello World')
+  })
+
+  test('should be able to use the Headers object', async() => {
+    fetchMock.mockResponse('Hello World', { status: 200 })
+
+    const myHeaders = new Headers()
+    myHeaders.append('Authorization', 'test')
+
+    const { statusCode, isFinished } = useFetch('https://example.com', { headers: myHeaders })
+
+    await until(isFinished).toBe(true)
+
+    expect(statusCode.value).toBe(200)
+    expect(fetchMock.mock.calls[0][1]!.headers).toMatchObject({ authorization: 'test' })
   })
 
   test('should parse response as json', async() => {
@@ -77,6 +91,19 @@ describe('useFetch', () => {
 
     await until(isFinished).toBe(true)
     url.value = 'https://example.com/test'
+    await nextTick()
+    await until(isFinished).toBe(true)
+
+    expect(fetchMock).toBeCalledTimes(2)
+  })
+
+  test('should auto refetch when the refetch is set to true and the payload is a ref', async() => {
+    fetchMock.mockResponse(JSON.stringify({ message: 'Hello World' }), { status: 200 })
+    const param = ref({ num: 1 })
+    const { isFinished } = useFetch('https://example.com', { refetch: true }).post(param)
+
+    await until(isFinished).toBe(true)
+    param.value.num = 2
     await nextTick()
     await until(isFinished).toBe(true)
 
@@ -162,14 +189,17 @@ describe('useFetch', () => {
 
     let didResponseEventFire = false
     let didErrorEventFire = false
-    const { isFinished, onFetchResponse, onFetchError } = useFetch('https://example.com')
+    let didFinallyEventFire = false
+    const { isFinished, onFetchResponse, onFetchError, onFetchFinally } = useFetch('https://example.com')
 
     onFetchResponse(() => didResponseEventFire = true)
     onFetchError(() => didErrorEventFire = true)
+    onFetchFinally(() => didFinallyEventFire = true)
 
     await until(isFinished).toBe(true)
     expect(didResponseEventFire).toBe(true)
     expect(didErrorEventFire).toBe(false)
+    expect(didFinallyEventFire).toBe(true)
   })
 
   test('should emit onFetchError event', async() => {
@@ -177,13 +207,62 @@ describe('useFetch', () => {
 
     let didResponseEventFire = false
     let didErrorEventFire = false
-    const { isFinished, onFetchResponse, onFetchError } = useFetch('https://example.com')
+    let didFinallyEventFire = false
+    const { isFinished, onFetchResponse, onFetchError, onFetchFinally } = useFetch('https://example.com')
 
     onFetchResponse(() => didResponseEventFire = true)
     onFetchError(() => didErrorEventFire = true)
+    onFetchFinally(() => didFinallyEventFire = true)
 
     await until(isFinished).toBe(true)
     expect(didResponseEventFire).toBe(false)
     expect(didErrorEventFire).toBe(true)
+    expect(didFinallyEventFire).toBe(true)
+  })
+
+  test('setting the request method w/ get and return type w/ json', async() => {
+    fetchMock.mockResponse(JSON.stringify({ message: 'Hello World' }), { status: 200 })
+
+    const { data, isFinished } = useFetch('https://example.com').get().json()
+
+    await until(isFinished).toBe(true)
+
+    expect(data.value).toStrictEqual({ message: 'Hello World' })
+  })
+
+  test('setting the request method w/ post and return type w/ text', async() => {
+    fetchMock.mockResponse(JSON.stringify({ message: 'Hello World' }), { status: 200 })
+
+    const { data, isFinished } = useFetch('https://example.com').post().text()
+
+    await until(isFinished).toBe(true)
+
+    expect(data.value).toStrictEqual(JSON.stringify({ message: 'Hello World' }))
+  })
+
+  test('allow setting response type before doing request', async() => {
+    fetchMock.mockResponse(JSON.stringify({ message: 'Hello World' }), { status: 200 })
+
+    const shell = useFetch('https://example.com', {
+      immediate: false,
+    }).get().text()
+    shell.json()
+    shell.execute()
+    const { isFinished, data } = shell
+    await until(isFinished).toBe(true)
+
+    expect(data.value).toStrictEqual({ message: 'Hello World' })
+  })
+
+  test('not allowed setting response type while doing request', async() => {
+    fetchMock.mockResponse(JSON.stringify({ message: 'Hello World' }), { status: 200 })
+
+    const shell = useFetch('https://example.com').get().text()
+    const { isFetching, isFinished, data } = shell
+    await until(isFetching).toBe(true)
+    shell.json()
+    await until(isFinished).toBe(true)
+
+    expect(data.value).toStrictEqual(JSON.stringify({ message: 'Hello World' }))
   })
 })

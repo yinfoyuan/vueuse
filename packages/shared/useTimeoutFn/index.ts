@@ -1,10 +1,10 @@
 import { ref, unref } from 'vue-demi'
-import { tryOnUnmounted } from '../tryOnUnmounted'
+import { tryOnScopeDispose } from '../tryOnScopeDispose'
 import { isClient, MaybeRef, Stopable } from '../utils'
 
 export interface TimeoutFnOptions {
   /**
-   * Execute the callback immediate after calling this function
+   * Start the timer immediate after calling this function
    *
    * @default true
    */
@@ -60,7 +60,7 @@ export function useTimeoutFn(
       start()
   }
 
-  tryOnUnmounted(stop)
+  tryOnScopeDispose(stop)
 
   return {
     isPending,

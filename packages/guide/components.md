@@ -22,7 +22,7 @@ onClickOutside(el, close)
   <div ref="el">
     Click Outside of Me
   </div>
-<template>
+</template>
 ```
 
 You can now use it in the component way:
@@ -30,6 +30,10 @@ You can now use it in the component way:
 ```html
 <script setup>
 import { OnClickOutside } from '@vueuse/components'
+
+function close () {
+  /* ... */
+}
 </script>
 
 <template>
@@ -64,4 +68,4 @@ Similarly, you can also access return values with `v-slot`:
 $ npm i @vueuse/core @vueuse/components
 ```
 
-Refer to each functions docuemantions for the detailed usage of component style.
+Refer to each function's documentation for the detailed usage of component style.

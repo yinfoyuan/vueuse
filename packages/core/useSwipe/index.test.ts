@@ -1,7 +1,6 @@
-import { SwipeDirection, useSwipe } from './index'
-import { useSetup } from '../../.test'
-
 import each from 'jest-each'
+import { useSetup } from '../../.test'
+import { SwipeDirection, useSwipe } from './index'
 
 describe('useSwipe', () => {
   const target = document.createElement('div')
@@ -12,8 +11,6 @@ describe('useSwipe', () => {
     touches: [{
       clientX: x,
       clientY: y,
-      altitudeAngle: 0,
-      azimuthAngle: 0,
       force: 0,
       identifier: 0,
       pageX: 0,
@@ -24,7 +21,6 @@ describe('useSwipe', () => {
       screenX: 0,
       screenY: 0,
       target,
-      touchType: 'direct',
     }],
   })
 

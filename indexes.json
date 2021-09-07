@@ -162,11 +162,32 @@
       "description": "utility for creating event hooks"
     },
     {
+      "name": "createGlobalState",
+      "package": "shared",
+      "docs": "https://vueuse.org/shared/createGlobalState/",
+      "category": "State",
+      "description": "keep states in the global scope to be reusable across Vue instances"
+    },
+    {
+      "name": "createSharedComposable",
+      "package": "shared",
+      "docs": "https://vueuse.org/shared/createSharedComposable/",
+      "category": "State",
+      "description": "make a composable function usable with multiple Vue instances"
+    },
+    {
       "name": "debouncedWatch",
       "package": "shared",
       "docs": "https://vueuse.org/shared/debouncedWatch/",
       "category": "Watch",
       "description": "debounced watch"
+    },
+    {
+      "name": "eagerComputed",
+      "package": "shared",
+      "docs": "https://vueuse.org/shared/eagerComputed/",
+      "category": "Utilities",
+      "description": "eager computed without lazy evaluation"
     },
     {
       "name": "extendRef",
@@ -260,11 +281,39 @@
       "description": "throttled watch"
     },
     {
+      "name": "toReactive",
+      "package": "shared",
+      "docs": "https://vueuse.org/shared/toReactive/",
+      "category": "Utilities",
+      "description": "converts ref to reactive"
+    },
+    {
+      "name": "toRefs",
+      "package": "shared",
+      "docs": "https://vueuse.org/shared/toRefs/",
+      "category": "Utilities",
+      "description": "extended [`toRefs`](https://v3.vuejs.org/api/refs-api.html#torefs) that also accepts refs of an object"
+    },
+    {
+      "name": "tryOnBeforeUnmount",
+      "package": "shared",
+      "docs": "https://vueuse.org/shared/tryOnBeforeUnmount/",
+      "category": "Component",
+      "description": "safe `onBeforeUnmount`"
+    },
+    {
       "name": "tryOnMounted",
       "package": "shared",
       "docs": "https://vueuse.org/shared/tryOnMounted/",
       "category": "Component",
       "description": "safe `onMounted`"
+    },
+    {
+      "name": "tryOnScopeDispose",
+      "package": "shared",
+      "docs": "https://vueuse.org/shared/tryOnScopeDispose/",
+      "category": "Component",
+      "description": "safe `onScopeDispose`"
     },
     {
       "name": "tryOnUnmounted",
@@ -391,11 +440,11 @@
       "description": "a ref which will be reset to the default value after some time"
     },
     {
-      "name": "createGlobalState",
+      "name": "computedInject",
       "package": "core",
-      "docs": "https://vueuse.org/core/createGlobalState/",
-      "category": "State",
-      "description": "keep states in the global scope to be reusable across Vue instances"
+      "docs": "https://vueuse.org/core/computedInject/",
+      "category": "Component",
+      "description": "combine computed and inject"
     },
     {
       "name": "onClickOutside",
@@ -426,13 +475,6 @@
       "docs": "https://vueuse.org/core/templateRef/",
       "category": "Component",
       "description": "shorthand for binding ref to template element"
-    },
-    {
-      "name": "toRefs",
-      "package": "core",
-      "docs": "https://vueuse.org/core/toRefs/",
-      "category": "Utilities",
-      "description": "extended [`toRefs`](https://v3.vuejs.org/api/refs-api.html#torefs) that also accepts refs of an object"
     },
     {
       "name": "unrefElement",
@@ -566,6 +608,13 @@
       "description": "tracks the visibility of an element within the viewport"
     },
     {
+      "name": "useEventBus",
+      "package": "core",
+      "docs": "https://vueuse.org/core/useEventBus/",
+      "category": "Utilities",
+      "description": "a basic event bus"
+    },
+    {
       "name": "useEventListener",
       "package": "core",
       "docs": "https://vueuse.org/core/useEventListener/",
@@ -623,6 +672,13 @@
       "docs": "https://vueuse.org/core/useIntersectionObserver/",
       "category": "Sensors",
       "description": "detects that a target element's visibility"
+    },
+    {
+      "name": "useKeyModifier",
+      "package": "core",
+      "docs": "https://vueuse.org/core/useKeyModifier/",
+      "category": "Sensors",
+      "description": "reactive [Modifier State](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/getModifierState)"
     },
     {
       "name": "useLocalStorage",
@@ -831,6 +887,13 @@
       "description": "reactive swipe detection based on [`TouchEvents`](https://developer.mozilla.org/en-US/docs/Web/API/TouchEvent)"
     },
     {
+      "name": "useTemplateRefsList",
+      "package": "core",
+      "docs": "https://vueuse.org/core/useTemplateRefsList/",
+      "category": "Component",
+      "description": "shorthand for binding refs to template elements and components inside `v-for`"
+    },
+    {
       "name": "useTimeAgo",
       "package": "core",
       "component": true,
@@ -889,6 +952,13 @@
       "description": "shorthand for props v-model binding"
     },
     {
+      "name": "useWakeLock",
+      "package": "core",
+      "docs": "https://vueuse.org/core/useWakeLock/",
+      "category": "Browser",
+      "description": "reactive [Screen Wake Lock API](https://developer.mozilla.org/en-US/docs/Web/API/Screen_Wake_Lock_API) provides a way to prevent devices from dimming or locking the screen when an application needs to keep running"
+    },
+    {
       "name": "useWebSocket",
       "package": "core",
       "docs": "https://vueuse.org/core/useWebSocket/",
@@ -908,6 +978,14 @@
       "docs": "https://vueuse.org/core/useWebWorkerFn/",
       "category": "Misc",
       "description": "run expensive function without blocking the UI"
+    },
+    {
+      "name": "useWindowFocus",
+      "package": "core",
+      "component": true,
+      "docs": "https://vueuse.org/core/useWindowFocus/",
+      "category": "Sensors",
+      "description": "reactively track window focus with `window.onfocus` and `window.onblur` events"
     },
     {
       "name": "useWindowScroll",
@@ -1049,6 +1127,20 @@
       "docs": "https://vueuse.org/electron/useIpcRendererOn/",
       "category": "@Electron",
       "description": "use [ipcRenderer.on](https://www.electronjs.org/docs/api/ipc-renderer#ipcrendereronchannel-listener) with ease and [ipcRenderer.removeListener](https://www.electronjs.org/docs/api/ipc-renderer#ipcrendererremovelistenerchannel-listener) automatically on unmounted"
+    },
+    {
+      "name": "useZoomFactor",
+      "package": "electron",
+      "docs": "https://vueuse.org/electron/useZoomFactor/",
+      "category": "@Electron",
+      "description": "reactive [WebFrame](https://www.electronjs.org/docs/api/web-frame#webframe) zoom factor"
+    },
+    {
+      "name": "useZoomLevel",
+      "package": "electron",
+      "docs": "https://vueuse.org/electron/useZoomLevel/",
+      "category": "@Electron",
+      "description": "reactive [WebFrame](https://www.electronjs.org/docs/api/web-frame#webframe) zoom level"
     }
   ]
 }

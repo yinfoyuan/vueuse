@@ -1,5 +1,5 @@
 ::: tip
-📰 [Recent updated functions](/recent-updated)
+📰 [Recently updated functions](/recently-updated)
 :::
 
 # Core Functions
@@ -37,12 +37,17 @@
   - [`useShare`](https://vueuse.org/core/useShare/) — reactive [Web Share API](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share)
   - [`useTitle`](https://vueuse.org/core/useTitle/) — reactive document title
   - [`useUrlSearchParams`](https://vueuse.org/core/useUrlSearchParams/) — reactive [URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)
+  - [`useWakeLock`](https://vueuse.org/core/useWakeLock/) — reactive [Screen Wake Lock API](https://developer.mozilla.org/en-US/docs/Web/API/Screen_Wake_Lock_API) provides a way to prevent devices from dimming or locking the screen when an application needs to keep running
 
 ### Component
+  - [`computedInject`](https://vueuse.org/core/computedInject/) — combine computed and inject
   - [`templateRef`](https://vueuse.org/core/templateRef/) — shorthand for binding ref to template element
+  - [`tryOnBeforeUnmount`](https://vueuse.org/shared/tryOnBeforeUnmount/) — safe `onBeforeUnmount`
   - [`tryOnMounted`](https://vueuse.org/shared/tryOnMounted/) — safe `onMounted`
+  - [`tryOnScopeDispose`](https://vueuse.org/shared/tryOnScopeDispose/) — safe `onScopeDispose`
   - [`tryOnUnmounted`](https://vueuse.org/shared/tryOnUnmounted/) — safe `onUnmounted`
   - [`unrefElement`](https://vueuse.org/core/unrefElement/) — unref for dom element
+  - [`useTemplateRefsList`](https://vueuse.org/core/useTemplateRefsList/) — shorthand for binding refs to template elements and components inside `v-for`
   - [`useVModel`](https://vueuse.org/core/useVModel/) — shorthand for v-model binding
   - [`useVModels`](https://vueuse.org/core/useVModels/) — shorthand for props v-model binding
 
@@ -71,6 +76,7 @@
   - [`useGeolocation`](https://vueuse.org/core/useGeolocation/) — reactive [Geolocation API](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API)
   - [`useIdle`](https://vueuse.org/core/useIdle/) — tracks whether the user is being inactive
   - [`useIntersectionObserver`](https://vueuse.org/core/useIntersectionObserver/) — detects that a target element's visibility
+  - [`useKeyModifier`](https://vueuse.org/core/useKeyModifier/) — reactive [Modifier State](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/getModifierState)
   - [`useMagicKeys`](https://vueuse.org/core/useMagicKeys/) — reactive keys pressed state
   - [`useMouse`](https://vueuse.org/core/useMouse/) — reactive mouse position
   - [`useMouseInElement`](https://vueuse.org/core/useMouseInElement/) — reactive mouse position related to an element
@@ -85,11 +91,13 @@
   - [`useSpeechRecognition`](https://vueuse.org/core/useSpeechRecognition/) — reactive [SpeechRecognition](https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition)
   - [`useSwipe`](https://vueuse.org/core/useSwipe/) — reactive swipe detection based on [`TouchEvents`](https://developer.mozilla.org/en-US/docs/Web/API/TouchEvent)
   - [`useUserMedia`](https://vueuse.org/core/useUserMedia/) — reactive [`mediaDevices.getUserMedia`](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia) streaming
+  - [`useWindowFocus`](https://vueuse.org/core/useWindowFocus/) — reactively track window focus with `window.onfocus` and `window.onblur` events
   - [`useWindowScroll`](https://vueuse.org/core/useWindowScroll/) — reactive window scroll
   - [`useWindowSize`](https://vueuse.org/core/useWindowSize/) — reactive window size
 
 ### State
-  - [`createGlobalState`](https://vueuse.org/core/createGlobalState/) — keep states in the global scope to be reusable across Vue instances
+  - [`createGlobalState`](https://vueuse.org/shared/createGlobalState/) — keep states in the global scope to be reusable across Vue instances
+  - [`createSharedComposable`](https://vueuse.org/shared/createSharedComposable/) — make a composable function usable with multiple Vue instances
   - [`useLocalStorage`](https://vueuse.org/core/useLocalStorage/) — reactive [LocalStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
   - [`useSessionStorage`](https://vueuse.org/core/useSessionStorage/) — reactive [SessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
   - [`useStorage`](https://vueuse.org/core/useStorage/) — reactive [LocalStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)/[SessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
@@ -102,6 +110,7 @@
   - [`controlledComputed`](https://vueuse.org/shared/controlledComputed/) — explicitly define the deps of computed
   - [`controlledRef`](https://vueuse.org/shared/controlledRef/) — fine-grained controls over ref and its reactivity
   - [`createEventHook`](https://vueuse.org/shared/createEventHook/) — utility for creating event hooks
+  - [`eagerComputed`](https://vueuse.org/shared/eagerComputed/) — eager computed without lazy evaluation
   - [`extendRef`](https://vueuse.org/shared/extendRef/) — add extra attributes to Ref
   - [`get`](https://vueuse.org/shared/get/) — shorthand for accessing `ref.value`
   - [`makeDestructurable`](https://vueuse.org/shared/makeDestructurable/) — make isomorphic destructurable for object and array at the same time
@@ -112,11 +121,13 @@
   - [`reactivePick`](https://vueuse.org/shared/reactivePick/) — reactively pick fields from a reactive object
   - [`set`](https://vueuse.org/shared/set/) — shorthand for `ref.value = x`
   - [`syncRef`](https://vueuse.org/shared/syncRef/) — keep target refs in sync with a source ref
-  - [`toRefs`](https://vueuse.org/core/toRefs/) — extended [`toRefs`](https://v3.vuejs.org/api/refs-api.html#torefs) that also accepts refs of an object
+  - [`toReactive`](https://vueuse.org/shared/toReactive/) — converts ref to reactive
+  - [`toRefs`](https://vueuse.org/shared/toRefs/) — extended [`toRefs`](https://v3.vuejs.org/api/refs-api.html#torefs) that also accepts refs of an object
   - [`useAsyncState`](https://vueuse.org/core/useAsyncState/) — reactive async state
   - [`useCounter`](https://vueuse.org/shared/useCounter/) — basic counter with utility functions
   - [`useDebounce`](https://vueuse.org/shared/useDebounce/) — debounce execution of a ref value
   - [`useDebounceFn`](https://vueuse.org/shared/useDebounceFn/) — debounce execution of a function
+  - [`useEventBus`](https://vueuse.org/core/useEventBus/) — a basic event bus
   - [`useLastChanged`](https://vueuse.org/shared/useLastChanged/) — records the timestamp of the last change
   - [`useManualRefHistory`](https://vueuse.org/core/useManualRefHistory/) — manually track the change history of a ref when the using calls `commit()`
   - [`useRefHistory`](https://vueuse.org/core/useRefHistory/) — track the change history of a ref

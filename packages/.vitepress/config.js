@@ -42,7 +42,7 @@ const DefaultSideBar = [
   { text: 'Add-ons', link: '/add-ons' },
   { text: 'Ecosystem', link: '/ecosystem' },
   { text: 'Export Size', link: '/export-size' },
-  { text: 'Recent Updated', link: '/recent-updated' },
+  { text: 'Recently Updated', link: '/recently-updated' },
 ]
 
 const FunctionsSideBar = getFunctionsSideBar()
@@ -87,6 +87,7 @@ const config = {
       {
         text: 'More',
         items: [
+          { text: 'Playground', link: 'https://play.vueuse.org' },
           { text: 'Ecosystem', link: '/ecosystem' },
           { text: 'Export Size', link: '/export-size' },
         ],
@@ -94,8 +95,8 @@ const config = {
       {
         text: `v${currentVersion}`,
         items: [
-          { test: 'Releases', link: 'https://github.com/vueuse/vueuse/releases' },
-          { text: 'What\'s news', link: '/recent-updated' },
+          { text: 'Release Notes', link: 'https://github.com/vueuse/vueuse/releases' },
+          { text: 'What\'s new', link: '/recently-updated' },
           ...versions.map((i) => {
             if (i.version === currentVersion) {
               return {
@@ -116,14 +117,19 @@ const config = {
       '/guide/': DefaultSideBar,
       '/contributing': DefaultSideBar,
       '/add-ons': DefaultSideBar,
+      '/ecosystem': DefaultSideBar,
+      '/guidelines': DefaultSideBar,
+      '/export-size': DefaultSideBar,
+      '/recently-updated': DefaultSideBar,
+
       '/functions': FunctionsSideBar,
       '/core/': FunctionsSideBar,
       '/shared/': FunctionsSideBar,
       '/router/': FunctionsSideBar,
-      '/ecosystem': DefaultSideBar,
-      '/guidelines': DefaultSideBar,
-      '/export-size': DefaultSideBar,
-      '/recent-updated': DefaultSideBar,
+      '/electron/': FunctionsSideBar,
+      '/rxjs/': FunctionsSideBar,
+      '/integrations/': FunctionsSideBar,
+      '/firebase/': FunctionsSideBar,
     },
     algolia: {
       apiKey: 'a99ef8de1b2b27949975ce96642149c6',

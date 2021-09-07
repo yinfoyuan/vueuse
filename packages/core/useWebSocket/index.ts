@@ -1,5 +1,5 @@
 import { ref, Ref } from 'vue-demi'
-import { Fn, tryOnUnmounted, useIntervalFn } from '@vueuse/shared'
+import { Fn, tryOnScopeDispose, useIntervalFn } from '@vueuse/shared'
 
 export type WebSocketStatus = 'OPEN' | 'CONNECTING' | 'CLOSED'
 
@@ -62,6 +62,13 @@ export interface WebSocketOptions {
    * @default true
    */
   immediate?: boolean
+
+  /**
+   * List of one or more sub-protocol strings
+   *
+   * @default []
+   */
+  protocols?: string[]
 }
 
 export interface WebSocketResult<T> {
@@ -124,6 +131,7 @@ export function useWebSocket<Data = any>(
     onError,
     onMessage,
     immediate = true,
+    protocols = [],
   } = options
 
   const data: Ref<Data | null> = ref(null)
@@ -166,7 +174,7 @@ export function useWebSocket<Data = any>(
   }
 
   const _init = () => {
-    const ws = new WebSocket(url)
+    const ws = new WebSocket(url, protocols)
     wsRef.value = ws
     status.value = 'CONNECTING'
     explicitlyClosed = false
@@ -232,7 +240,7 @@ export function useWebSocket<Data = any>(
     _init()
   }
 
-  tryOnUnmounted(close)
+  tryOnScopeDispose(close)
 
   return {
     data,

@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { useRoute } from 'vitepress'
 import type { DefaultTheme } from '../config'
 import NavDropdownLinkItem from './NavDropdownLinkItem.vue'
@@ -90,7 +90,7 @@ function toggle() {
 .button-arrow {
   display: inline-block;
   margin-top: -1px;
-  margin-left: 8px;
+  margin-left: 5px;
   border-top: 6px solid #ccc;
   border-right: 4px solid transparent;
   border-bottom: 0;
@@ -112,6 +112,7 @@ function toggle() {
   margin: 0;
   padding: 0;
   list-style: none;
+  @apply md:dark:(border border-gray-400 border-opacity-20);
 }
 
 @media (min-width: 720px) {

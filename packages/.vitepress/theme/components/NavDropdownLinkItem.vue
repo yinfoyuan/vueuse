@@ -1,15 +1,15 @@
 <template>
   <div class="nav-dropdown-link-item">
     <a class="item" v-bind="linkProps">
-      <span class="arrow" />
-      <span class="text">{{ item.text }}</span>
-      <span class="icon"><OutboundLink v-if="isExternal" /></span>
+      <!-- <span class="arrow" /> -->
+      <span class="text md:ml-2">{{ item.text }}</span>
+      <span class="icon"><OutboundLink v-if="isExternal" class="ml-0.5 opacity-50 align-middle" /></span>
     </a>
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps, toRefs } from 'vue'
+import { toRefs } from 'vue'
 import type { DefaultTheme } from '../config'
 import { useNavLink } from '../composables/navLink'
 import OutboundLink from './icons/OutboundLink.vue'
@@ -44,9 +44,9 @@ const { props: linkProps, isExternal } = useNavLink(propsRefs.item)
     white-space: nowrap;
   }
 
-  /* .item.active .arrow {
+  .item.active .arrow {
     opacity: 1;
-  } */
+  }
 }
 
 .item:hover,

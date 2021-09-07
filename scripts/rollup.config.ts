@@ -1,12 +1,11 @@
-
+import fs from 'fs'
+import { resolve } from 'path'
 import typescript from 'rollup-plugin-typescript2'
 import { terser } from 'rollup-plugin-terser'
 import dts from 'rollup-plugin-dts'
 import { OutputOptions, Plugin, RollupOptions } from 'rollup'
-import { activePackages } from '../meta/packages'
-import fs from 'fs'
 import fg from 'fast-glob'
-import { resolve } from 'path'
+import { activePackages } from '../meta/packages'
 
 const VUE_DEMI_IIFE = fs.readFileSync(require.resolve('vue-demi/lib/index.iife.js'), 'utf-8')
 const configs: RollupOptions[] = []
@@ -37,11 +36,11 @@ for (const { globals, name, external, submodules, iife } of activePackages) {
 
     const output: OutputOptions[] = [
       {
-        file: `packages/${name}/dist/${fn}.cjs.js`,
+        file: `packages/${name}/dist/${fn}.cjs`,
         format: 'cjs',
       },
       {
-        file: `packages/${name}/dist/${fn}.esm.js`,
+        file: `packages/${name}/dist/${fn}.mjs`,
         format: 'es',
       },
     ]

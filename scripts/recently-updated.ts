@@ -1,8 +1,8 @@
-import Git from 'simple-git'
-import { stringifyFunctions } from './utils'
-import { functionNames, functions } from '../meta/function-indexes'
-import fs from 'fs-extra'
 import { resolve } from 'path'
+import Git from 'simple-git'
+import fs from 'fs-extra'
+import { functionNames, functions } from '../meta/function-indexes'
+import { stringifyFunctions } from './utils'
 
 const git = Git()
 
@@ -44,14 +44,14 @@ export async function generateRecentUpdated() {
     false,
   ).replace(/\n+/g, '\n')
 
-  md = `# Recent updated
+  md = `# Recently updated
 
 ${md}
 
 Go back to the [full-list](/functions)
 `
 
-  await fs.writeFile(resolve(__dirname, '../packages/recent-updated.md'), md, 'utf-8')
+  await fs.writeFile(resolve(__dirname, '../packages/recently-updated.md'), md, 'utf-8')
 }
 
 generateRecentUpdated()

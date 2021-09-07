@@ -9,25 +9,25 @@ export type Serializer<T> = {
   write(value: T): string
 }
 
-const Serializers: Record<string, Serializer<any>> = {
+export const StorageSerializers: Record<'boolean' | 'object' | 'number' | 'any' | 'string', Serializer<any>> = {
   boolean: {
-    read: (v: any) => v != null ? v === 'true' : null,
+    read: (v: any) => v === 'true',
     write: (v: any) => String(v),
   },
   object: {
-    read: (v: any) => v ? JSON.parse(v) : null,
+    read: (v: any) => JSON.parse(v),
     write: (v: any) => JSON.stringify(v),
   },
   number: {
-    read: (v: any) => v != null ? Number.parseFloat(v) : null,
+    read: (v: any) => Number.parseFloat(v),
     write: (v: any) => String(v),
   },
   any: {
-    read: (v: any) => v != null ? v : null,
+    read: (v: any) => v,
     write: (v: any) => String(v),
   },
   string: {
-    read: (v: any) => v != null ? v : null,
+    read: (v: any) => v,
     write: (v: any) => String(v),
   },
 }
@@ -53,6 +53,13 @@ export interface StorageOptions<T> extends ConfigurableEventFilter, Configurable
    * Custom data serialization
    */
   serializer?: Serializer<T>
+
+  /**
+   * On error callback
+   *
+   * Default log error to `console.error`
+   */
+  onError?: (error: unknown) => void
 }
 
 export function useStorage(key: string, defaultValue: string, storage?: StorageLike, options?: StorageOptions<string>): Ref<string>
@@ -82,9 +89,10 @@ export function useStorage<T extends(string|number|boolean|object|null)> (
     listenToStorageChanges = true,
     window = defaultWindow,
     eventFilter,
+    onError = (e) => {
+      console.error(e)
+    },
   } = options
-
-  const data = ref<T>(defaultValue)
 
   const type = defaultValue == null
     ? 'any'
@@ -99,28 +107,27 @@ export function useStorage<T extends(string|number|boolean|object|null)> (
             : !Number.isNaN(defaultValue)
               ? 'number'
               : 'any'
-  const serializer = options.serializer ?? Serializers[type]
+
+  const data = ref<T>(defaultValue)
+  const serializer = options.serializer ?? StorageSerializers[type]
 
   function read(event?: StorageEvent) {
-    if (!storage)
-      return
-
-    if (event && event.key !== key)
+    if (!storage || (event && event.key !== key))
       return
 
     try {
       const rawValue = event ? event.newValue : storage.getItem(key)
       if (rawValue == null) {
         (data as Ref<T>).value = defaultValue
-        storage.setItem(key, serializer.write(defaultValue))
+        if (defaultValue !== null)
+          storage.setItem(key, serializer.write(defaultValue))
       }
       else {
         data.value = serializer.read(rawValue)
       }
     }
     catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn(e)
+      onError(e)
     }
   }
 
@@ -142,8 +149,7 @@ export function useStorage<T extends(string|number|boolean|object|null)> (
           storage.setItem(key, serializer.write(data.value))
       }
       catch (e) {
-        // eslint-disable-next-line no-console
-        console.warn(e)
+        onError(e)
       }
     },
     {

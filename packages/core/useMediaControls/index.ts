@@ -1,5 +1,5 @@
 import { watch, ref, unref, watchEffect } from 'vue-demi'
-import { isObject, MaybeRef, isString, ignorableWatch, isNumber, tryOnUnmounted, Fn, createEventHook } from '@vueuse/shared'
+import { isObject, MaybeRef, isString, ignorableWatch, isNumber, tryOnScopeDispose, Fn, createEventHook } from '@vueuse/shared'
 import { useEventListener } from '../useEventListener'
 import { ConfigurableDocument, defaultDocument } from '../_configurable'
 
@@ -155,7 +155,6 @@ export function useMediaControls(target: MaybeRef<HTMLMediaElement | null | unde
   const currentTime = ref(0)
   const duration = ref(0)
   const seeking = ref(false)
-  const buffering = ref(false)
   const volume = ref(1)
   const waiting = ref(false)
   const ended = ref(false)
@@ -283,7 +282,7 @@ export function useMediaControls(target: MaybeRef<HTMLMediaElement | null | unde
   })
 
   // Remove source error listeners
-  tryOnUnmounted(() => {
+  tryOnScopeDispose(() => {
     const el = unref(target)
     if (!el)
       return
@@ -416,12 +415,11 @@ export function useMediaControls(target: MaybeRef<HTMLMediaElement | null | unde
   })
 
   // Remove text track listeners
-  tryOnUnmounted(() => listeners.forEach(listener => listener()))
+  tryOnScopeDispose(() => listeners.forEach(listener => listener()))
 
   return {
     currentTime,
     duration,
-    buffering,
     waiting,
     seeking,
     ended,
